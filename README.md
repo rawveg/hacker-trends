@@ -11,11 +11,15 @@
 
 *Transform Hacker News data into actionable insights with beautiful visualizations and real-time sentiment analysis*
 
-[🎯 **Live Demo**](https://hacker-trends.vercel.app/) • [📖 **Documentation**](#-getting-started) • [🐛 **Report Bug**](https://github.com/rawveg/hacker-trends/issues) • [✨ **Request Feature**](https://github.com/rawveg/hacker-trends/issues)
+[🎯 **Live Demo**](https://hacker-trends.vercel.app/) • [📖 **Quick Start**](#-quick-start) • [🚀 **Full Deployment Guide**](DEPLOYMENT.md) • [🐛 **Report Bug**](https://github.com/rawveg/hacker-trends/issues)
 
 </div>
 
+---
+
 ![](hacker-trends-dashboard.png)
+
+---
 
 ## ✨ Features
 
@@ -58,110 +62,100 @@
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### 📋 Prerequisites
 
-Before you begin, ensure you have the following installed:
 - **Node.js** (v18 or higher)
 - **npm** or **yarn**
 - **Git**
+- **Supabase CLI** (for backend setup)
 
-### 🔧 Installation
+### ⚡ Installation
 
-#### 1️⃣ **Clone the Repository**
+#### 1️⃣ **Clone & Install**
 ```bash
 git clone https://github.com/rawveg/hacker-trends.git
 cd hacker-trends
+npm install
 ```
 
-#### 2️⃣ **Install Dependencies**
+#### 2️⃣ **Install Supabase CLI**
 ```bash
-npm install
-# or
-yarn install
+npm install -g supabase
 ```
 
 #### 3️⃣ **Set Up Supabase Backend**
 
-<details>
-<summary><strong>📖 Detailed Supabase Setup Instructions</strong></summary>
+**Create a new Supabase project:**
+1. Visit [supabase.com](https://supabase.com) and create a new project
+2. Note your **Project Reference ID** from Settings → General
 
-1. **Create a Supabase Project**
-   - Visit [supabase.com](https://supabase.com)
-   - Click "New Project"
-   - Fill in your project details
+**Link and deploy:**
+```bash
+# Login to Supabase
+supabase login
 
-2. **Deploy Edge Functions**
-   
-   For each function in the `supabase/functions` directory:
-   
-   - **get-top-stories**: Fetches the top 100 stories from Hacker News
-   - **get-comment-sentiments**: Analyzes sentiment of comments
-   - **get-story-with-comments**: Retrieves full story details with threaded comments
-   
-   In your Supabase dashboard:
-   - Go to "Edge Functions"
-   - Create a new function for each one
-   - Copy the code from the corresponding file
-   - Deploy the function
+# Link your project (replace YOUR_PROJECT_REF with your actual project reference)
+supabase link --project-ref YOUR_PROJECT_REF
 
-3. **Get Your Credentials**
-   - Navigate to `Project Settings` → `API`
-   - Copy your **Project URL** and **anon public key**
+# Deploy all edge functions automatically
+supabase functions deploy
+```
 
-</details>
+This deploys three essential edge functions:
+- `get-top-stories` - Fetches top 100 stories from Hacker News
+- `get-comment-sentiments` - Analyzes sentiment of comments
+- `get-story-with-comments` - Retrieves full story details with threaded comments
 
-#### 4️⃣ **Configure Environment Variables**
-
-Create a `.env` file in the root directory:
+#### 4️⃣ **Configure Environment**
 
 ```bash
-# Copy from .env.example
+# Copy environment template
 cp .env.example .env
 ```
 
-Edit `.env` with your Supabase credentials:
+Get your Supabase credentials:
+```bash
+# Get your project URL and anon key
+supabase status
+```
+
+Edit `.env` with your credentials:
 ```env
 VITE_SUPABASE_URL="your_supabase_project_url"
 VITE_SUPABASE_ANON_KEY="your_supabase_anon_key"
 ```
 
-#### 5️⃣ **Start Development Server**
+#### 5️⃣ **Start Development**
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-🎉 **Success!** Open [http://localhost:8080](http://localhost:8080) to see your application.
+🎉 **Success!** Open [http://localhost:8080](http://localhost:8080)
 
 ---
 
-## 🌐 Deployment
+## 🌐 Production Deployment
 
-### Deploy to Vercel (Recommended)
+For complete production deployment instructions, see our **[📖 Deployment Guide](DEPLOYMENT.md)**.
+
+### Quick Deploy to Vercel
 
 1. **Push to GitHub**
    ```bash
    git add .
-   git commit -m "Initial commit"
+   git commit -m "Ready for deployment"
    git push origin main
    ```
 
 2. **Deploy on Vercel**
    - Visit [vercel.com](https://vercel.com)
-   - Click "Add New..." → "Project"
    - Import your GitHub repository
-
-3. **Configure Environment Variables**
-   - In your Vercel project settings
-   - Go to "Environment Variables"
-   - Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
-
-4. **Deploy**
-   - Vercel will automatically build and deploy
-   - Your app will be live at `your-project.vercel.app`
+   - Add environment variables:
+     - `VITE_SUPABASE_URL`
+     - `VITE_SUPABASE_ANON_KEY`
+   - Deploy!
 
 ---
 
@@ -193,6 +187,43 @@ yarn dev
 
 ---
 
+## 🔧 Development
+
+### 🏗️ **Project Structure**
+
+```
+hacker-trends/
+├── src/
+│   ├── components/          # Reusable UI components
+│   ├── pages/              # Route components
+│   ├── hooks/              # Custom React hooks
+│   ├── contexts/           # React contexts
+│   ├── types/              # TypeScript type definitions
+│   └── utils/              # Utility functions
+├── supabase/
+│   ├── functions/          # Edge functions
+│   └── config.toml         # Supabase configuration
+├── public/                 # Static assets
+└── docs/                   # Documentation
+```
+
+### 🧪 **Available Scripts**
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+```
+
+### 🔌 **Adding New Features**
+
+1. **Frontend Components**: Add to `src/components/`
+2. **New Pages**: Add to `src/pages/` and update routing in `src/App.tsx`
+3. **Backend Functions**: Add to `supabase/functions/` and deploy with `supabase functions deploy`
+
+---
+
 ## 🤝 Contributing
 
 We welcome contributions! Here's how you can help:
@@ -210,9 +241,46 @@ We welcome contributions! Here's how you can help:
 ### 💻 **Submit Code**
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+3. Make your changes
+4. Test thoroughly
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### 🧪 **Development Guidelines**
+
+- Follow the existing code style
+- Add TypeScript types for new features
+- Test your changes on both desktop and mobile
+- Update documentation for new features
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Edge Functions Not Working**
+```bash
+# Check function deployment status
+supabase functions list
+
+# View function logs
+supabase functions logs get-top-stories
+```
+
+**Environment Variables**
+```bash
+# Verify your environment setup
+cat .env
+supabase status
+```
+
+**CORS Errors**
+- Ensure edge functions are properly deployed
+- Check browser console for specific error messages
+
+For more troubleshooting help, see our [Deployment Guide](DEPLOYMENT.md).
 
 ---
 
@@ -243,8 +311,9 @@ See the [LICENSE](LICENSE) file for full details.
 
 **⭐ Star this repository if you find it useful!**
 
-Made with ❤️  for all lovers of Hacker News
+Made with ❤️ by the Hacker Trends team
 
 [🔝 Back to Top](#-hacker-trends)
 
+</div>
 </div>
