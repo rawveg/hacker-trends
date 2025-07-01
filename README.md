@@ -15,15 +15,7 @@
 
 </div>
 
----
-
-## 📸 Preview
-
-<div align="center">
-  <img src="https://raw.githubusercontent.com/rawveg/hacker-trends/main/pasted-image-2025-07-01T15-58-12-154Z.png" alt="Hacker Trends Dashboard" width="100%" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
-</div>
-
----
+![](hacker-trends-dashboard.png)
 
 ## ✨ Features
 
@@ -251,7 +243,7 @@ See the [LICENSE](LICENSE) file for full details.
 
 **⭐ Star this repository if you find it useful!**
 
-Made with ❤️ by the Hacker Trends team
+Made with ❤️  for all lovers of Hacker News
 
 [🔝 Back to Top](#-hacker-trends)
 
